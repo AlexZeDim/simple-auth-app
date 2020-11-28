@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 const morgan = require('morgan');
 const cors = require("cors");
 
-const signinRouter = require('./routes/signin');
+const signinRouter = require('./routes/signin')
+const signupRouter = require('./routes/signup');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/signin', signinRouter);
+app.use('/signup', signupRouter);
 
 const port = process.env.port || 8080;
 
