@@ -1,0 +1,25 @@
+doctype html
+
+html
+    head
+        title= title
+        script(src='https://code.jquery.com/jquery-3.1.1.slim.min.js', integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n', crossorigin='anonymous')
+        script(src='https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js')
+        link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        script.
+          $(document).ready(function () {
+            bsCustomFileInput.init();
+            $("#inputGroupFile").on('change', function () {
+              const input = $(this)[0];
+              if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                  $('#preview').attr('src', e.target.result).fadeIn('slow');
+                }
+                reader.readAsDataURL(input.files[0]);
+              }
+            });
+          });
+    body
+        block content

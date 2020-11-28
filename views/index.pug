@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .container
+        .row
+            .col-sm
+                form(method='post', enctype='multipart/form-data')
+                    .input-group.mb-3
+                        .custom-file
+                            input#inputGroupFile.custom-file-input(type='file', name='upload')
+                            label.custom-file-label(for='inputGroupFile', aria-describedby="inputGroupFileAddon")
+                                | Select file...
+                        .input-group-append
+                            input.input-group-text(type='submit', name='upload', value='Upload')

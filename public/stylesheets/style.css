@@ -1,8 +1,17 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #222;
 }
 
-a {
-  color: #00B7FF;
+form {
+  position: relative;
+  margin-top: 175px;
+}
+
+upload_status {
+  color: snow;
+}
+
+p {
+  color: #fff
 }
