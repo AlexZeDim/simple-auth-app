@@ -1,11 +1,13 @@
 body {
-  padding: 50px;
+  padding: 10px;
   background: #222;
+  height: 100vh;
 }
 
 form {
   position: relative;
-  margin-top: 175px;
+  width: auto;
+  top: 50%;
 }
 
 upload_status {

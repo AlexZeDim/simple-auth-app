@@ -13,9 +13,13 @@ const sequelize = new Sequelize(process.env.db, process.env.login, process.env.p
 });
 
 const UserModel = require('./model/user')(sequelize, DataTypes);
+const FileModel = require('./model/file')(sequelize, DataTypes);
 
 sequelize.authenticate().then(() => console.log('Connected'))
 sequelize.sync().then(() => { console.log('User table hsa been created') }) //{ force: true }
 
-module.exports = UserModel
+module.exports = {
+  UserModel,
+  FileModel
+}
 

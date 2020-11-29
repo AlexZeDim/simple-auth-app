@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const UserModel = require('../db/database')
+const { UserModel } = require('../db/database')
 
 router.post('/', async (req, res) => {
   try {
