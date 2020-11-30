@@ -8,7 +8,23 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/uploads/')
   },
-  filename: function (req, file, cb) {
+  filename: async function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    /**
+     * If file exists,
+     * if no => create
+     */
+    const fileDoc = await FileModel.findOne({ where: { name: 'test' } })
+    if (!fileDoc) {
+      await FileModel.create({
+        name: 'test',
+        extension: ext,
+        mime: file.mimeType,
+        //TODO size and data
+      })
+    }
+
+    console.log(Buffer.from(req.ip).toString('hex') + '-' + Date.now(), ext, file)
     cb(null, Buffer.from(req.ip).toString('hex') + '-' + Date.now())
   }
 });
@@ -22,12 +38,6 @@ router.post('/', async (req, res) => {
   try {
     const upload = multer({
       storage: storage,
-      fileFilter: function (req, file, cb) {
-        const ext = path.extname(file.originalname);
-        console.log(ext, file)
-        cb(null, true)
-      },
-      limits: { fileSize: 102400 },
     }).single('upload');
     upload(req, res, function (err) {
       if (err) return res.end("Something went wrong! " + err);
