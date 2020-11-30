@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       extension: DataTypes.STRING(150),
       mime: DataTypes.STRING(150),
       size: DataTypes.STRING(150),
+      path: DataTypes.STRING(150),
       data: DataTypes.BLOB("long")
     },
     {

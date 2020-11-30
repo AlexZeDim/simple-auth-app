@@ -9,22 +9,6 @@ const storage = multer.diskStorage({
     cb(null, 'public/uploads/')
   },
   filename: async function (req, file, cb) {
-    const ext = path.extname(file.originalname);
-    /**
-     * If file exists,
-     * if no => create
-     */
-    const fileDoc = await FileModel.findOne({ where: { name: 'test' } })
-    if (!fileDoc) {
-      await FileModel.create({
-        name: 'test',
-        extension: ext,
-        mime: file.mimeType,
-        //TODO size and data
-      })
-    }
-
-    console.log(Buffer.from(req.ip).toString('hex') + '-' + Date.now(), ext, file)
     cb(null, Buffer.from(req.ip).toString('hex') + '-' + Date.now())
   }
 });
@@ -34,12 +18,29 @@ router.get('/', function(req, res, next) {
   next()
 });
 
-router.post('/', async (req, res) => {
+router.post('/', (req, res) => {
   try {
     const upload = multer({
       storage: storage,
     }).single('upload');
-    upload(req, res, function (err) {
+    upload(req, res, async function (err) {
+      const ext = path.extname(req.file.originalname);
+      /**
+       * If file exists,
+       * if no => create
+       */
+      const fileDoc = await FileModel.findOne({ where: { name: req.file.originalname, } })
+      if (!fileDoc) {
+        await FileModel.create({
+          name: req.file.originalname,
+          extension: ext,
+          mime: req.file.mimeType,
+          size: req.file.size,
+          path: req.file.path,
+        })
+      }
+
+      console.log(Buffer.from(req.ip).toString('hex') + '-' + Date.now(), ext)
       if (err) return res.end("Something went wrong! " + err);
       res.redirect('back');
     })
